@@ -8,17 +8,17 @@
 </head>
 <body>
     <ul class="nav">
-        @if (request()->routeIs('home'))
-        <li><a class="active" href="{{ route('home') }}">Home</a></li>
-        @else
-        <li><a href="{{ route("home") }}">Home</a></li>
-        @endif
-        @if (request()->routeIs('about'))      
-        <li><a class="active" href="{{ route("about") }}">About</a></li>
-        @else
-        <li><a href="{{ route("about") }}">About</a></li>
-        @endif
+        <li><a class="{{ request()->routeIs('home') ? 'active' : ''}} " href="{{ route("home") }}">Home</a></li>  
+        <li><a class="{{ request()->routeIs('about') ? 'active' : ''}} " href="{{ route("about") }}">About</a></li>
+        <li><a class="{{ request()->routeIs('create') ? 'active' : ''}}" href="{{ route("posts.create")}}">Create Post</a></li>
     </ul>
+
+    @if (session('success'))
+    <div class="flash-success">
+        {{ session('success') }}
+    @endif
+    
+    </div>
     <div class="main">
     @yield('content')
     </div>
