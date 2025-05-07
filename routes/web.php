@@ -12,15 +12,20 @@ Route::get("/about", function(){
     return view("about");
 })->name("about");
 
-Route::get('/posts/create', function(){
-    return view('create');
-})->name('posts.create');
+Route::name('posts.')->prefix('posts')->group(function(){
+    Route::get('/create', function(){
+    return view('posts.create');
+})->name('create');
 
-Route::post('/posts', function(Request $request){
-    $title = $request->input('title');
-    $description = $request->input('description');
+Route::post('/', function(Request $request){
+    $validate = $request->validate([
+        'title' => 'required|min:3',
+        'description' => 'required|min:10'
+    ]);
 
     return redirect()
         ->route('posts.create')
-        ->with('success', 'Post is submitted! Title: ' . $title . ' Description: ' . $description);
-})->name('posts.store');
+        ->with('success', 'Post is submitted! Title: ' . $validated['title'] . ' Description: ' . $validated['description']);
+})->name('store');
+});
+

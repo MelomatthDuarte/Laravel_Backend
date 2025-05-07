@@ -13,11 +13,13 @@
         <li><a class="{{ request()->routeIs('create') ? 'active' : ''}}" href="{{ route("posts.create")}}">Create Post</a></li>
     </ul>
 
+    @includeWhen($errors->any(), '_errors')
+
     @if (session('success'))
     <div class="flash-success">
         {{ session('success') }}
     @endif
-    
+
     </div>
     <div class="main">
     @yield('content')
